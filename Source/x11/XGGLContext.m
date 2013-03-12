@@ -41,7 +41,7 @@
 //should I store the display ?
 #define MAKE_DISPLAY(dpy) Display *dpy;\
   dpy = [(XGServer *)GSCurrentServer() xDisplay];\
-  NSAssert(dpy != NULL, NSInternalInconsistencyException)
+  NSAssert1(dpy != NULL, @"%@", NSInternalInconsistencyException)
 
 @interface XGXSubWindow : NSObject
 {
@@ -88,13 +88,13 @@
     }
   
   server = (XGServer *)GSServerForWindow(window);
-  NSAssert(server != nil, NSInternalInconsistencyException);
+  NSAssert1(server != nil, @"%@", NSInternalInconsistencyException);
 
-  NSAssert([server isKindOfClass: [XGServer class]], 
-           NSInternalInconsistencyException);
+  NSAssert1([server isKindOfClass: [XGServer class]], 
+           @"%@", NSInternalInconsistencyException);
 
   win_info = [XGServer _windowWithTag: [window windowNumber]];
-  NSAssert(win_info, NSInternalInconsistencyException);
+  NSAssert1(win_info, @"%@", NSInternalInconsistencyException);
 
   if ([server handlesWindowDecorations] == YES)
     {
@@ -170,7 +170,7 @@
   NSWindow *win;
   int x, y, width, height;
 
-  NSAssert(attached, NSInternalInconsistencyException);
+  NSAssert1(attached, @"%@", NSInternalInconsistencyException);
 
   win = [attached window];
   NSAssert1(win, @"%@'s window is nil now!", attached);
@@ -179,16 +179,16 @@
 	    @"%@ is rotated or scaled, now!", attached);
   
   server = GSServerForWindow(win);
-  NSAssert(server != nil, NSInternalInconsistencyException);
+  NSAssert1(server != nil, @"%@", NSInternalInconsistencyException);
 
-  NSAssert([server isKindOfClass: [XGServer class]], 
-	   NSInternalInconsistencyException);
+  NSAssert1([server isKindOfClass: [XGServer class]], 
+	   @"%@", NSInternalInconsistencyException);
 
   //FIXME
   //we should check that the window hasn't changed, maybe.
 
   win_info = [XGServer _windowWithTag: [win windowNumber]];
-  NSAssert(win_info, NSInternalInconsistencyException);
+  NSAssert1(win_info, @"%@", NSInternalInconsistencyException);
 
   if ([server handlesWindowDecorations] == YES)
     {
@@ -435,8 +435,8 @@ static XGGLContext *currentGLContext;
                             made current"];
     }
   
-  NSAssert(glx_context != None && glx_drawable != None,
-	   NSInternalInconsistencyException);
+  NSAssert1(glx_context != None && glx_drawable != None,
+	   @"%@", NSInternalInconsistencyException);
 
   if ([XGGLPixelFormat glxMinorVersion] >= 3)
     {
@@ -492,7 +492,7 @@ static XGGLContext *currentGLContext;
 		          format: @"setView called with a nil value"];
     }
 
-  NSAssert(pixelFormat, NSInternalInconsistencyException);
+  NSAssert1(pixelFormat, @"%@", NSInternalInconsistencyException);
   current_view = [self view];
 
   if ( current_view != nil )
@@ -507,7 +507,7 @@ static XGGLContext *currentGLContext;
   saved_ignores_backing = [view _ignoresBacking];
   [view _setIgnoresBacking: YES];
 
-  NSDebugMLLog(@"GLX", @"glx_window : %u", glx_drawable);
+  NSDebugMLLog(@"GLX", @"glx_window : %lu", (unsigned long)glx_drawable);
 }
 
 - (void)update

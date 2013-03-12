@@ -79,8 +79,8 @@
 {
   int error;
 
-  NSAssert((fbconfig != NULL || visualinfo != NULL) && configurationCount > 0,
-            NSInternalInconsistencyException);
+  NSAssert1((fbconfig != NULL || visualinfo != NULL) && configurationCount > 0,
+            @"%@", NSInternalInconsistencyException);
 
 
   if (glxminorversion >= 3)
@@ -329,10 +329,10 @@ do \
   visualinfo = NULL;
 
   display = [(XGServer *)GSCurrentServer() xDisplay];
-  NSAssert(display != NULL, NSInternalInconsistencyException);
+  NSAssert1(display != NULL, @"%@", NSInternalInconsistencyException);
 
   glxminorversion = [XGGLPixelFormat glxMinorVersion];
-  NSDebugMLLog(@"GLX", @"minor version %d", glxminorversion);
+  NSDebugMLLog(@"GLX", @"minor version %ld", (long)glxminorversion);
 
   glxAttributes = [self assembleGLXAttributes:attribs];  
   dsattributes = [GSCurrentServer() attributes];

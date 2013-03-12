@@ -357,7 +357,7 @@ static int              xFixesEventBase;
 {
   int		count;
 
-  NSAssert(type == ET_RDESC, NSInternalInconsistencyException);
+  NSAssert1(type == ET_RDESC, @"%@", NSInternalInconsistencyException);
 
   while ((count = XPending(xDisplay)) > 0)
     {

@@ -64,7 +64,7 @@ gpbs_log (int prio)
 {
   if (is_daemon)
     {
-      syslog (log_priority | prio, ebuf);
+      syslog (log_priority | prio, "%s", ebuf);
     }
   else if (prio == LOG_INFO)
     {
